@@ -1,0 +1,24 @@
+<odoo>
+  <data>
+
+
+   
+ <!-- Top menu item -->
+
+    
+
+    <!-- menu categories -->
+
+    <!-- <menuitem name="Dashboard" id="steril_supervisorio.dashboard_ciclos_menu" parent="steril_supervisorio.menu_root" sequence="-1"/> -->
+    
+    
+ 
+
+    <!-- actions -->
+
+    <menuitem name="Dashboard" id="steril_supervisorio_dashboard.action_supervisorio_dashboard_ciclos" parent="steril_supervisorio.ciclos_menu" action="steril_supervisorio_dashboard.dashboard_ciclos_action_client" />
+    
+    
+  
+  </data>
+</odoo>
