@@ -158,7 +158,7 @@ export class DashboardCiclos extends Component {
             }
             const rawPrev_data = await this.orm.searchCount(model, prev_domain)
             this.state.values = await this.orm.searchRead(model,
-                [['data_inicio', '>', this.state.previous_date], ['data_inicio', '<=', this.state.current_date]],
+                [['data_inicio', '>', this.state.previous_date]],
                 ['state', 'name', 'operator', 'data_inicio', 'data_fim', 'duration'],
                 { limit: 10, order:"data_inicio DESC"}
             )
