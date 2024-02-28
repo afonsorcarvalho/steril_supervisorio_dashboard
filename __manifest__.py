@@ -22,6 +22,8 @@
             'steril_supervisorio_dashboard/static/src/components/steril_supervisorio_dashboard_view/*.scss',
             'steril_supervisorio_dashboard/static/src/components/kpi_card/*.xml',
             'steril_supervisorio_dashboard/static/src/components/kpi_card/*.js',
+            'steril_supervisorio_dashboard/static/src/components/cycle_table/*.js',
+            'steril_supervisorio_dashboard/static/src/components/cycle_table/*.xml',
             'steril_supervisorio_dashboard/static/src/components/chart_renderer/*.js',
             'steril_supervisorio_dashboard/static/src/components/chart_renderer/*.xml',
             'steril_supervisorio_dashboard/static/src/js/*.js',

@@ -4,6 +4,7 @@ import { registry } from '@web/core/registry';
 //import { ListController } from "@web/views/list/list_controller"
 import { KpiCard } from "../components/kpi_card/kpi_card"
 import { ChartRenderer } from "../components/chart_renderer/chart_renderer"
+import { CycleTable } from "../components/cycle_table/cycle_table_renderer"
 import { useService } from "@web/core/utils/hooks";
 import { useSetupAction } from "@web/webclient/actions/action_hook";
 import { ControlPanel } from "@web/search/control_panel/control_panel";
@@ -38,6 +39,7 @@ export class DashboardCiclos extends Component {
         this.env.config.viewSwitcherEntries = [];
 
         this.state = useState({
+            values:{},
             ciclos: {
                 iniciado: {
 
@@ -98,7 +100,11 @@ export class DashboardCiclos extends Component {
         this.model = "steril_supervisorio.ciclos"
         onWillStart(async () => {
             this.getDates()
-            await this.getData()
+            
+            this.interval = setInterval(async () => {
+                await this.getData();
+            }, 10000);
+           // await this.getDataCiclo()
         })
     }
     async onChangePeriod(){
@@ -113,11 +119,15 @@ export class DashboardCiclos extends Component {
         console.log(this.state.current_date)
         this.state.previous_date = moment().subtract(this.state.period * 2, 'days').format('MM-DD-YYYY HH:mm:ss')
     }
-
+    async getDataCiclo() {
+        let model = this.model
+        domain = [['state','in',['finalizado']]]
+        //let values = await this.orm.searchCount(model,domain)
+    }
     async getData(){
         let model = this.model
         let domain = [['state', 'in', ['finalizado']]]
-       
+        
         for (const e of states) {
             console.log( e)
             console.log(  this.state.ciclos)
@@ -138,6 +148,13 @@ export class DashboardCiclos extends Component {
                 prev_domain.push(['data_inicio','>', this.state.previous_date], ['data_inicio','<=', this.state.current_date])
             }
             const rawPrev_data = await this.orm.searchCount(model, prev_domain)
+            this.state.values = await this.orm.searchRead(model,
+                [['data_inicio', '>', this.state.previous_date], ['data_inicio', '<=', this.state.current_date]],
+                ['state', 'name', 'operator', 'data_inicio', 'data_fim', 'duration'],
+                { limit: 10, order:"data_inicio DESC"}
+            )
+
+          
             var rawPercentage = ((count - rawPrev_data) / rawPrev_data) * 100
             rawPercentage = isNaN(rawPercentage) ? 0 : rawPercentage;
             const percentage = Math.min(100, Math.max(0, rawPercentage));
@@ -201,5 +218,5 @@ export class DashboardCiclos extends Component {
 
 }
 DashboardCiclos.template = 'steril_supervisorio.DashboardCiclos'
-DashboardCiclos.components = { KpiCard, ChartRenderer, ControlPanel,Layout }
+DashboardCiclos.components = { KpiCard, CycleTable, ChartRenderer, ControlPanel,Layout }
 registry.category('actions').add('steril_supervisorio_dashboard.action_dashboard_ciclos', DashboardCiclos);
