@@ -12,21 +12,9 @@
         
     ],
     'data': [
-        
-        
-        
-        
-        
-        
         'views/supervisorio_dashboard_views.xml',
         'views/supervisorio_menu_views.xml',
-        
-        
-        
-        
-        
     ],
-    
     'assets':{
         'web.assets_backend':[
             'steril_supervisorio_dashboard/static/src/components/steril_supervisorio_dashboard_view/*.xml',
