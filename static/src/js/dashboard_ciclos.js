@@ -9,7 +9,7 @@ import { useService } from "@web/core/utils/hooks";
 import { useSetupAction } from "@web/webclient/actions/action_hook";
 import { ControlPanel } from "@web/search/control_panel/control_panel";
 import { Layout } from "@web/search/layout";
-const {  Component , useState,onWillStart,useSubEnv } = owl;
+const {  Component , useState,onWillStart,onWillUnmount,useSubEnv } = owl;
 
 const states = [
     'iniciado',
@@ -106,6 +106,15 @@ export class DashboardCiclos extends Component {
             }, 10000);
            // await this.getDataCiclo()
         })
+
+        onWillUnmount(() => {
+            
+                // Limpar o intervalo quando o componente for destruído
+                clearInterval(this.interval);
+            
+        }
+
+        )
     }
     async onChangePeriod(){
         this.getDates()
