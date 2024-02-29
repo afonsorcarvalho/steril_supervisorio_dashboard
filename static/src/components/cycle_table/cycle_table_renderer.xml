@@ -12,23 +12,36 @@
                     <tr>
                         <th>Status</th>
                         <th>Cod Carga</th>
+                        <th>Equipamento</th>
                         <th>Operador</th>
                         <th>Inicio</th>
                         <th>Fim</th>
-                        <th>Duração</th>
+                        <th>Duração (hh:mm)</th>
                     </tr>
                 </thead>
                 <tbody>
             <t t-foreach="props.data" t-as="line" t-key="line.id" >
-                <tr>
+                <tr t-att-class="{
+                    'state-iniciado': line.state === 'iniciado',
+                    'state-em_andamento': line.state === 'em_andamento',
+                    'state-finalizado': line.state === 'finalizado',
+                    'state-incompleto': line.state === 'incompleto',
+                    'state-esperando_biologico': line.state === 'esperando_biologico',
+                    'state-esperando_aprovacao_supervisor': line.state === 'esperando_aprovacao_supervisor',
+                    'state-abortado': line.state === 'abortado',
+                    'state-concluido': line.state === 'concluido',
+                    'state-cancelado': line.state === 'cancelado',
+                    'state-reprovado': line.state === 'reprovado'
+                }">
                     <td>
                     <t t-esc="line.state" />
                    </td>
                     <td> <t t-esc="line.name" /></td>
-                    <td> <t t-esc="line.operator" /></td>
+                    <td> <t t-esc="line.equipment[1]" /></td>
+                    <td> <t t-esc="line.operator[1]" /></td>
                     <td> <t t-esc="line.data_inicio" /></td>
                     <td> <t t-esc="line.data_fim" /></td>
-                    <td> <t t-esc="line.duration" /></td>
+                    <td> <t t-esc="floatToTime(line.duration)" /></td>
                 </tr>
                
                 

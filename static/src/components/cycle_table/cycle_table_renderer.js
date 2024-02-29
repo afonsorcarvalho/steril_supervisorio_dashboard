@@ -13,7 +13,18 @@ export class CycleTable extends Component {
 
         onMounted(()=>this.renderTable())
     }
-
+    floatToTime(floatValue) {
+      // Extrair a parte inteira e decimal do valor float
+      let hours = Math.floor(floatValue);
+      let minutes = Math.round((floatValue - hours) * 60);
+  
+      // Formatar o tempo para HH:mm
+      let hoursString = hours.toString().padStart(2, '0');
+      let minutesString = minutes.toString().padStart(2, '0');
+  
+      return hoursString + ':' + minutesString;
+    }
+   
     renderTable(){
        
       

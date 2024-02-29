@@ -133,6 +133,17 @@ export class DashboardCiclos extends Component {
         domain = [['state','in',['finalizado']]]
         //let values = await this.orm.searchCount(model,domain)
     }
+    floatToTime(floatValue) {
+        // Extrair a parte inteira e decimal do valor float
+        let hours = Math.floor(floatValue);
+        let minutes = Math.round((floatValue - hours) * 60);
+    
+        // Formatar o tempo para HH:mm
+        let hoursString = hours.toString().padStart(2, '0');
+        let minutesString = minutes.toString().padStart(2, '0');
+    
+        return hoursString + ':' + minutesString;
+    }
     async getData(){
         let model = this.model
         let domain = [['state', 'in', ['finalizado']]]
@@ -159,14 +170,16 @@ export class DashboardCiclos extends Component {
             const rawPrev_data = await this.orm.searchCount(model, prev_domain)
             this.state.values = await this.orm.searchRead(model,
                 [['data_inicio', '>', this.state.previous_date]],
-                ['state', 'name', 'operator', 'data_inicio', 'data_fim', 'duration'],
-                { limit: 10, order:"data_inicio DESC"}
+                ['state', 'name', 'equipment','operator', 'data_inicio', 'data_fim', 'duration'],
+                { limit: 7, order:"data_inicio DESC"}
             )
 
           
             var rawPercentage = ((count - rawPrev_data) / rawPrev_data) * 100
-            rawPercentage = isNaN(rawPercentage) ? 0 : rawPercentage;
-            const percentage = Math.min(100, Math.max(0, rawPercentage));
+            //rawPercentage = isNaN(rawPercentage) ? '-&infin;' : rawPercentage;
+            //rawPercentage = isFinite(rawPercentage) ? '&infin;' : rawPercentage;
+           // const percentage = Math.min(100, Math.max(0, rawPercentage));
+            const percentage = rawPercentage;
             this.state.ciclos[e].percentage = percentage.toFixed(2)
         }
         

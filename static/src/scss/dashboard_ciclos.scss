@@ -1,0 +1,15 @@
+.state-em_andamento {
+    color: blue; /* Cor para o estado 'iniciado' */
+}
+
+.state-incompleto {
+    color: gray; /* Cor para o estado 'em_andamento' */
+}
+.state-finalizado {
+    color: orange; /* Cor para o estado 'em_andamento' */
+}
+.state-finalizado {
+    color: green; /* Cor para o estado 'em_andamento' */
+}
+
+/* Defina classes para outros estados com cores diferentes */
